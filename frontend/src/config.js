@@ -1,4 +1,4 @@
-export const Backend_Url = 'http://localhost:3000/api'
+export const Backend_Url=import.meta.env.VITE_API_URL;
 
 export const SignupFormControls = [
     {

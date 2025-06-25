@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, Navigate } from 'react-router-dom'
 import Signup from './pages/auth/Signup'
 import Signin from './pages/auth/Signin'
 import './App.css'
@@ -11,6 +11,7 @@ function App() {
     <>
     <UserAuthInit/>
       <Routes>
+        <Route path='/' element={<Navigate to='/auth/signin'/>}></Route>
         <Route path='/auth'>
           <Route path='signup' element={<Signup />}></Route>
           <Route path='signin' element={<Signin />}></Route>

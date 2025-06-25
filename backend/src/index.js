@@ -11,8 +11,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(    
     cors({
-        // origin: ['http://localhost:5173'],
-        origin: true,
+        origin: [
+            'http://localhost:5173',
+            'https://tejas-task-manager.vercel.app'
+        ],
         methods: ['GET','POST','PUT','DELETE'],
         credentials: true
     })

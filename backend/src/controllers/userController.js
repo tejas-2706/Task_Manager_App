@@ -7,6 +7,8 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 
 const SECRET_KEY = 'tejas';
+const isProduction = process.env.NODE_ENV === 'production';
+
 
 const SignupSchema = Joi.object({
     name: Joi.string().required(),
@@ -53,8 +55,10 @@ const SignupUser = async (req, res, next) => {
             if (NewUser) {
                 const token = generateToken(NewUser?._id);
                 res.cookie('token', token, {
-                    withCredentials: true,
-                    httpOnly: false
+                    httpOnly: true,
+                    secure: isProduction,
+                    sameSite: isProduction ? 'None' : 'Lax',
+                    maxAge: 1000 * 60 * 60 * 24
                 });
                 res.status(200).json({
                     success: true,
@@ -104,8 +108,10 @@ const loginUser = async (req, res, next) => {
         }
         const token = generateToken(getUser._id);
         res.cookie('token', token, {
-            withCredentials: true,
-            httpOnly: false
+            httpOnly: true,
+            secure: isProduction,
+            sameSite: isProduction ? 'None' : 'Lax',
+            maxAge: 1000 * 60 * 60 * 24
         });
         res.status(200).json({
             success: true,
@@ -120,14 +126,16 @@ const loginUser = async (req, res, next) => {
     }
 }
 
-const logoutUser = async (req,res,next) => {
+const logoutUser = async (req, res, next) => {
     res.cookie('token', "", {
-        withCredentials: true,
-        httpOnly: false
+        httpOnly: true,
+        secure: isProduction,
+        sameSite: isProduction ? 'None' : 'Lax',
+        expires: new Date(0), 
     })
     return res.status(200).json({
         success: true,
         message: 'Logout Successfully !!'
     })
-} 
-export {SignupUser,loginUser, logoutUser}
+}
+export { SignupUser, loginUser, logoutUser }

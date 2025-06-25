@@ -1,6 +1,8 @@
 import mongoose from 'mongoose'
+import dotenv from 'dotenv'
+dotenv.config()
 
-mongoose.connect('mongodb+srv://narutoanimetp:narutoanimetp@cluster0.dcrvcxt.mongodb.net/')
+mongoose.connect(process.env.MONGODB_URL)
 .then(()=>console.log('MongoDB Connected Successfully'))
 .catch(error => console.log(error));
 

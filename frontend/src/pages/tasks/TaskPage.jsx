@@ -26,10 +26,15 @@ function TaskPage() {
   });
 
   async function fetchListOfTask() {
-    setLoading(true);
-    const response = await getAllTasksApi(user?._id);
-    setTaskList(response?.taskList);
-    setLoading(false);
+    if (!user?._id){
+      console.log("User Id Not available");
+      return;
+    }else {
+      setLoading(true);
+      const response = await getAllTasksApi(user?._id);
+      setTaskList(response?.taskList);
+      setLoading(false);
+    }
   }
   async function handleAddTask(getData) {
     console.log(getData);

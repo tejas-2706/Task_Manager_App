@@ -40,7 +40,7 @@ function TaskPage() {
       }) :
       await addNewTaskApi({
         ...getData,
-        userId: user._id
+        userId: user?._id
       });
     if (response) {
       fetchListOfTask();

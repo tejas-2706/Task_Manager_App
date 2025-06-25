@@ -7,6 +7,7 @@ import { toast } from "sonner"
 import { useForm } from 'react-hook-form';
 import TaskItem from './TaskItem';
 import { useState } from 'react';
+import { Skeleton } from "../../components/ui/skeleton"
 function TaskPage() {
   const loading = useLoadingStore(state => state.loading);
   const setLoading = useLoadingStore(state => state.setLoading);
@@ -92,7 +93,7 @@ function TaskPage() {
   return (
     <Fragment>
       <div className='mt-5 flex flex-col'>
-        <div className='grid md:grid-cols-4 grid-cols-2 gap-4'>
+        <div className='grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-4'>
           {taskList?.length > 0 ?
             taskList.map((taskItem) => (
               <TaskItem
@@ -102,16 +103,25 @@ function TaskPage() {
                 taskFormData={defaultFormValues}
               />
             )
-            ) : <h1>No tasks Added</h1>
+            ) : <div >
+              <div className='grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-2'>
+              <Skeleton className={'h-[125px] rounded-xl bg-gray-200'}/>
+              <Skeleton className={'h-[125px] rounded-xl bg-gray-200'}/>
+              <Skeleton className={'h-[125px] rounded-xl bg-gray-200'}/>
+              <Skeleton className={'h-[125px] rounded-xl bg-gray-200'}/>
+            </div>
+            </div>
           }
         </div>
       </div>
-      <AddNewTask
+      <div className='py-4 '>
+        <AddNewTask
         handleSubmit={defaultFormValues.handleSubmit(handleAddTask)}
         defaultFormValues={defaultFormValues}
         showDialog={showDialog}
         setShowDialog={setShowDialog}
       />
+      </div>
     </Fragment>
   )
 }

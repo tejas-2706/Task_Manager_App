@@ -8,11 +8,11 @@ import {
   CardHeader,
   CardTitle,
 } from "../components/ui/card"
-function CommonCard({title,description,content,footer,headerRightContent,extraTitleStyles}) {
+function CommonCard({title,description,content,footer,headerRightContent,extraTitleStyles,rightContenStyles}) {
   return (
-    <Card>
+    <Card className='mb-2 shadow-xl rounded-xl'>
         <CardHeader>
-            <div >
+            <div className='flex items-center justify-between'>
                 {title ? (
                     <CardTitle className={`text-2xl 
                     ${extraTitleStyles? extraTitleStyles:""}
@@ -20,7 +20,7 @@ function CommonCard({title,description,content,footer,headerRightContent,extraTi
                         {title}
                     </CardTitle>
                 ): null}
-                {headerRightContent ? headerRightContent : null}
+                <h2 className={`${rightContenStyles? rightContenStyles:""}`}>{headerRightContent ? headerRightContent : null}</h2>
             </div>
              <div>
                 {description ? (

@@ -3,6 +3,7 @@ import React from 'react'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import { useUserStore } from '../../store/useUserStore'
 import { callLogoutUserApi } from '../../services';
+import { Button } from '../../components/ui/button';
 
 function Layout() {
   const setUser = useUserStore((state) => state.setUser);
@@ -24,12 +25,19 @@ function Layout() {
               <ul className='flex gap-4 items-center justify-between w-full font-bold'>
                 <h1>Task Manger</h1>
                 <div className='flex gap-2'>
-                  <Link to={'/tasks/list'}>Tasks</Link>
-                  <Link to={'/tasks/scrum-board'}>Scrum Board</Link>
+                  <Link to={'/tasks/list'} className='hover:underline'>Tasks</Link>
+                  <Link to={'/tasks/scrum-board'} className='hover:underline'>Scrum Board</Link>
                 </div>
-                <div><LogOut
-                  className='hover:text-red-500 cursor-pointer '
-                  onClick={handleLogout} /></div>
+                <div>
+                  <Button
+                    className='hover:text-black cursor-pointer '
+                    onClick={handleLogout}
+                    variant={'destructive'}
+                    size={'sm'}
+                  >
+                    Logout <LogOut />
+                  </Button>
+                </div>
               </ul>
             </div>
             {/* <Header /> */}

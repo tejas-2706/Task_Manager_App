@@ -10,9 +10,13 @@ function TaskItem({item,handleDeleteTask,setShowDialog,taskFormData}) {
         <CommonCard
             title={item?.title}
             description={ScrumBoardOptions.map(boardOptions => boardOptions.id == item?.status ? boardOptions.label : null)}
+            headerRightContent={item?.priority}
+            rightContenStyles={`${item?.priority === 'high' ? `text-red-500` : item?.priority === 'medium' ? `text-green-500`: `text-yellow-500`} underline`}
             footer={
                 <div className='flex justify-between items-center w-full'>
-                    <Button onClick={()=> {
+                    <Button size={'sm'} variant={'outline'}  
+                    className={'font-bold'}
+                    onClick={()=> {
                         setShowDialog(true);
                         setCurrnEditId(item?._id);
                         taskFormData.setValue('title',item?.title)
@@ -20,7 +24,7 @@ function TaskItem({item,handleDeleteTask,setShowDialog,taskFormData}) {
                         taskFormData.setValue('status',item?.status)
                         taskFormData.setValue('priority',item?.priority)
                     }}>Edit</Button>
-                    <Button onClick={()=>{handleDeleteTask(item?._id)}}>Delete</Button>
+                    <Button variant={'default'} className={'font-bold'} size={'sm'} onClick={()=>{handleDeleteTask(item?._id)}}>Delete</Button>
                 </div>
             }
         />

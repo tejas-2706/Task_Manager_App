@@ -35,6 +35,7 @@ const SignupUser = async (req, res, next) => {
     });
     if (error) {
         return res.status(400).json({
+            success:false,
             message: error.details[0].message // here error message
         })
     }
@@ -43,6 +44,7 @@ const SignupUser = async (req, res, next) => {
         const isUserAlreadyExist = await User.findOne({ email });
         if (isUserAlreadyExist) {
             return res.status(400).json({
+                success:false,
                 message: 'User Email Already Exist'
             });
         } else {
@@ -90,6 +92,7 @@ const loginUser = async (req, res, next) => {
     });
     if (error) {
         return res.status(400).json({
+            success:false,
             message: `Wrong Credentials ${error.details[0].message}`
         })
     }
@@ -97,12 +100,14 @@ const loginUser = async (req, res, next) => {
         const getUser = await User.findOne({ email });
         if (!getUser) {
             return res.status(400).json({
+                success:false,
                 message: `Email Doesn't Exist !! Please Signup !!`
             })
         }
         const checkPassword = await bcrypt.compare(password, getUser.password);
         if (!checkPassword) {
             return res.status(400).json({
+                success:false,
                 message: `Pssword Incorrect !!`
             })
         }

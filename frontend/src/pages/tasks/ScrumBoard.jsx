@@ -62,14 +62,15 @@ function ScrumBoard() {
     taskList.forEach(taskItem => {
       taskStatus[taskItem.status].push(
         <div
-        className='mb-2 shadow-xl rounded-xl'
         onDragStart={taskItem.status !== 'done'? (event)=> onDragStart(event, taskItem._id): null}
         draggable={taskItem?.status !== 'done'? true : false}
         >
           <CommonCard 
           title={taskItem?.title}
           description={ScrumBoardOptions.map(boardOptions => boardOptions.id == taskItem?.status ? boardOptions.label : null)}
-          extraTitleStyles={taskItem?.status === 'done'? 'line-through text-green-400':'underline'}
+          extraTitleStyles={taskItem?.status === 'done'? 'line-through text-green-400':''}
+          headerRightContent={taskItem?.priority}
+          rightContenStyles={`${taskItem?.priority === 'high' ? `text-red-500` : taskItem?.priority === 'medium' ? `text-green-500`: `text-yellow-500`} underline `}
           />
         </div>
       )
@@ -80,10 +81,10 @@ function ScrumBoard() {
 
   return (
     <Fragment>
-      <div className="grid grid-cols-5 gap-2 h-full">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2 h-full">
         {ScrumBoardOptions.map((item) => (
           <div
-            className="border border-black rounded overflow-auto"
+            className="border border-black rounded-lg overflow-auto"
             key={item.id}
             onDrop={(event) => onDrop(event, item.id)}
             onDragOver={(event) => event.preventDefault()}

@@ -4,29 +4,40 @@ import { useForm } from 'react-hook-form'
 import { SigninFormControls } from '../../config';
 import { Link, useNavigate } from 'react-router-dom';
 import { callloginUserApi } from '../../services';
+import { useLoadingStore } from '../../store/useUserStore';
+import { LoaderCircle } from 'lucide-react';
 
 function Signin() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const loading = useLoadingStore(state => state.loading);
+  const setLoading = useLoadingStore(state => state.setLoading);
   const formData = useForm({
     defaultValues: {
-      email : '',
-      password : ''
+      email: '',
+      password: ''
     }
   });
-  async function handleSigninSubmit(getData){
-    console.log(getData);
-    const data = await callloginUserApi(getData);
-    console.log(data);
-    if (data?.success) navigate('/tasks/list');
+  async function handleSigninSubmit(getData) {
+    setLoading(true);
+
+    try {
+      const data = await callloginUserApi(getData);
+      if (data?.success) navigate('/tasks/list');
+
+    } catch (error) {
+      console.error("Login Error:", error);
+    }
+    setLoading(false);
   }
   return (
-    <div className='flex flex-col items-center justify-center'>
-      <h1 className='font-bold text-2xl p-3'>SignIn Page</h1>
+    <div className='flex flex-col items-center justify-center h-screen'>
+      <h1 className='font-bold text-4xl p-3 mb-4'>SignIn</h1>
       <CommonForm
-      formControls={SigninFormControls}
-      form={formData}
-      handleSubmit={formData.handleSubmit(handleSigninSubmit)}
-      btnText={'SignIn'}
+        formControls={SigninFormControls}
+        form={formData}
+        handleSubmit={formData.handleSubmit(handleSigninSubmit)}
+        btnText={loading ? <LoaderCircle className="animate-spin size-6 text-white mx-2" /> : 'SignIn'}
+        extraBtnStyles={`w-full mb-4`}
       />
       <span className='flex gap-1'>
         <h2>Dont have an Account. Create one by</h2>

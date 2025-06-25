@@ -10,7 +10,7 @@ import {
   SelectItem, 
 } from '../components/ui/select' 
 
-function CommonForm({formControls = [], handleSubmit, form, btnText}) {
+function CommonForm({formControls = [], handleSubmit, form, btnText, extraBtnStyles}) {
   return (
     <Form {...form}>
       <form onSubmit={handleSubmit}>
@@ -34,7 +34,7 @@ function CommonForm({formControls = [], handleSubmit, form, btnText}) {
                               {...field}
                               value={field.value}
                               className='w-full text-2xl'
-                            />
+                              />
                           </FormControl>)
                           :
                           controlItem.componentType === 'select' ? (
@@ -70,7 +70,7 @@ function CommonForm({formControls = [], handleSubmit, form, btnText}) {
               />
             ))
             : null}
-        <Button className={'mx-14 my-4'} type={'submit'}>{btnText}</Button>
+        <Button className={`${extraBtnStyles ? extraBtnStyles : ''} mt-4 `} type={'submit'}>{btnText}</Button>
       </form>
     </Form>
   );

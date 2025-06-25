@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from 'react'
 import { useLoadingStore, useTaskListStore, useUserStore } from '../../store/useUserStore';
 import { ScrumBoardOptions } from '../../config';
-import CommonCard from '../../components/COmmonCard'
+import CommonCard from '../../components/CommonCard'
 import { getAllTasksApi, updateTaskApi } from '../../services';
 
 function ScrumBoard() {

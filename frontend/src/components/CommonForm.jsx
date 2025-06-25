@@ -70,7 +70,7 @@ function CommonForm({formControls = [], handleSubmit, form, btnText}) {
               />
             ))
             : null}
-        <Button type={'submit'}>{btnText}</Button>
+        <Button className={'mx-14 my-4'} type={'submit'}>{btnText}</Button>
       </form>
     </Form>
   );

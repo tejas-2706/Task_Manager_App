@@ -1,5 +1,5 @@
 import React from 'react'
-import CommonCard from '../../components/COmmonCard'
+import CommonCard from '../../components/CommonCard'
 import { Button } from '../../components/ui/button'
 import { useCurrEditIdStore } from '../../store/useUserStore'
 import { ScrumBoardOptions } from '../../config'

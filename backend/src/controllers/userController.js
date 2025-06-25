@@ -1,7 +1,7 @@
 // to register
 //  to login
 //  to logout
-import Joi from 'Joi'
+import Joi from 'joi'
 import User from '../models/user.js'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'

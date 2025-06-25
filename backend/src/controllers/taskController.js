@@ -2,7 +2,7 @@
 // delete a task
 // get all tasks by userifd
 //  edit a task
-import Joi from 'Joi'
+import Joi from 'joi'
 import Task from '../models/task.js';
 
 const NewTaskSchema = Joi.object({

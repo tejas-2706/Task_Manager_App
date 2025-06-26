@@ -1,11 +1,12 @@
 import React from 'react'
 import CommonCard from '../../components/CommonCard'
 import { Button } from '../../components/ui/button'
-import { useCurrEditIdStore } from '../../store/useUserStore'
+import { useCurrEditIdStore, useLoadingStore } from '../../store/useUserStore'
 import { ScrumBoardOptions } from '../../config'
 
 function TaskItem({item,handleDeleteTask,setShowDialog,taskFormData}) {
-    const setCurrnEditId = useCurrEditIdStore(state => state.setCurrnEditId)
+    const setCurrnEditId = useCurrEditIdStore(state => state.setCurrnEditId);
+    const loading = useLoadingStore(state => state.loading);
     return (
         <CommonCard
             title={item?.title}
@@ -24,7 +25,9 @@ function TaskItem({item,handleDeleteTask,setShowDialog,taskFormData}) {
                         taskFormData.setValue('status',item?.status)
                         taskFormData.setValue('priority',item?.priority)
                     }}>Edit</Button>
-                    <Button variant={'default'} className={'font-bold'} size={'sm'} onClick={()=>{handleDeleteTask(item?._id)}}>Delete</Button>
+                    <Button disabled={loading} variant={'default'} className={'font-bold'} size={'sm'} onClick={()=>{handleDeleteTask(item?._id)}}>
+                        Delete
+                    </Button>
                 </div>
             }
         />

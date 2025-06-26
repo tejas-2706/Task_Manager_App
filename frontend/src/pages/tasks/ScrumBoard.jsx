@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react'
+import { Fragment, useEffect } from 'react'
 import { useLoadingStore, useTaskListStore, useUserStore } from '../../store/useUserStore';
 import { ScrumBoardOptions } from '../../config';
 import CommonCard from '../../components/CommonCard'
@@ -16,13 +16,13 @@ function ScrumBoard() {
     setTaskList(response?.taskList);
     setLoading(false);
   }
-  useEffect(()=>{
+  useEffect(() => {
     if (!user?._id) return;
     fetchListOfTask();
-  },[user?._id])
+  }, [user?._id])
 
-  function onDragStart(event , getTaskId){
-    event.dataTransfer.setData('id',getTaskId);
+  function onDragStart(event, getTaskId) {
+    event.dataTransfer.setData('id', getTaskId);
     // console.log(event.dataTransfer);
   }
 
@@ -30,14 +30,16 @@ function ScrumBoard() {
     console.log(getTask);
     // const {_id: taskId, ...getTask} = getTask;
     // console.log(getTask);
-
-    await updateTaskApi(getTask);
-    
-    await fetchListOfTask();
+    try {
+      await updateTaskApi(getTask);
+      await fetchListOfTask();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
 
-  function onDrop(event, getCurrnStatus){
+  function onDrop(event, getCurrnStatus) {
     const getDraggedTaskId = event.dataTransfer.getData('id');
 
     let findCurrnTask = taskList.find(item => item._id.toString() === getDraggedTaskId);
@@ -50,9 +52,9 @@ function ScrumBoard() {
     updateTaskByStatus(findCurrnTask);
   }
 
-  function renderTodoByStatus(){
+  function renderTodoByStatus() {
     const taskStatus = {
-      todo : [],
+      todo: [],
       inProgress: [],
       blocked: [],
       review: [],
@@ -62,15 +64,15 @@ function ScrumBoard() {
     taskList.forEach(taskItem => {
       taskStatus[taskItem.status].push(
         <div
-        onDragStart={taskItem.status !== 'done'? (event)=> onDragStart(event, taskItem._id): null}
-        draggable={taskItem?.status !== 'done'? true : false}
+          onDragStart={taskItem.status !== 'done' ? (event) => onDragStart(event, taskItem._id) : null}
+          draggable={taskItem?.status !== 'done' ? true : false}
         >
-          <CommonCard 
-          title={taskItem?.title}
-          description={ScrumBoardOptions.map(boardOptions => boardOptions.id == taskItem?.status ? boardOptions.label : null)}
-          extraTitleStyles={taskItem?.status === 'done'? 'line-through text-green-400':''}
-          headerRightContent={taskItem?.priority}
-          rightContenStyles={`${taskItem?.priority === 'high' ? `text-red-500` : taskItem?.priority === 'medium' ? `text-green-500`: `text-yellow-500`} underline `}
+          <CommonCard
+            title={taskItem?.title}
+            description={ScrumBoardOptions.map(boardOptions => boardOptions.id == taskItem?.status ? boardOptions.label : null)}
+            extraTitleStyles={taskItem?.status === 'done' ? 'line-through text-green-400' : ''}
+            headerRightContent={taskItem?.priority}
+            rightContenStyles={`${taskItem?.priority === 'high' ? `text-red-500` : taskItem?.priority === 'medium' ? `text-green-500` : `text-yellow-500`} underline `}
           />
         </div>
       )

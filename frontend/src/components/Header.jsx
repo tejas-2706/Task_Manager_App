@@ -22,7 +22,6 @@ function Header() {
             navigate('/auth/signin');
         }
     }
-    console.log(user);
     
     return (
         <div className='flex p-4 border-b border-gray-200'>

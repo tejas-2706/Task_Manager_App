@@ -1,45 +1,14 @@
-import { LogOut } from 'lucide-react'
-import React from 'react'
-import { Link, Outlet, useNavigate } from 'react-router-dom'
-import { useUserStore } from '../../store/useUserStore'
-import { callLogoutUserApi } from '../../services';
-import { Button } from '../../components/ui/button';
+import { Outlet } from 'react-router-dom'
+import Header from '../../components/Header';
 
 function Layout() {
-  const setUser = useUserStore((state) => state.setUser);
-  const navigate = useNavigate();
-  async function handleLogout() {
-    const response = await callLogoutUserApi();
-    if (response?.success) {
-      setUser(null);
-      navigate('/auth/signin');
-    }
-  }
   return (
     <>
       <div className="flec flex-auto flex-col">
         <div className="flex flex-auto">
           <main className="flex flex-col min-w-0 w-full bg-white border-gray-300 min-h-screen">
             {/* <Header /> */}
-            <div className='flex p-4 border-b border-gray-200'>
-              <ul className='flex gap-4 items-center justify-between w-full font-bold'>
-                <h1>Task Manger</h1>
-                <div className='flex gap-2'>
-                  <Link to={'/tasks/list'} className='hover:underline'>Tasks</Link>
-                  <Link to={'/tasks/scrum-board'} className='hover:underline'>Scrum Board</Link>
-                </div>
-                <div>
-                  <Button
-                    className='hover:text-black cursor-pointer '
-                    onClick={handleLogout}
-                    variant={'destructive'}
-                    size={'sm'}
-                  >
-                    Logout <LogOut />
-                  </Button>
-                </div>
-              </ul>
-            </div>
+            <Header/>
             {/* <Header /> */}
             <div className="flex flex-auto flex-col justify-between h-[calc(100%-64px)]">
               <div className="h-full">

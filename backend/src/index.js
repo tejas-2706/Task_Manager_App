@@ -13,7 +13,9 @@ app.use(
     cors({
         origin: [
             'http://localhost:5173',
-            'https://tejas-task-manager.vercel.app'
+            'https://tejas-task-manager.vercel.app',
+            'http://ec2-3-89-162-121.compute-1.amazonaws.com',
+            'https://ec2-3-89-162-121.compute-1.amazonaws.com'
         ],
         methods: ['GET','POST','PUT','DELETE'],
         credentials: true
